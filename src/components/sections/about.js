@@ -61,6 +61,12 @@ const StyledPic = styled.div`
     width: 100%;
     border-radius: var(--border-radius);
     background-color: var(--green);
+    background: transparent;
+
+    .img {
+      filter: none;
+      mix-blend-mode: normal;
+    }
 
     &:hover,
     &:focus {
@@ -80,9 +86,9 @@ const StyledPic = styled.div`
 
     .img {
       position: relative;
-      border-radius: var(--border-radius);
-      mix-blend-mode: multiply;
-      filter: grayscale(100%) contrast(1);
+      ${'' /* border-radius: var(--border-radius); */}
+      ${'' /* mix-blend-mode: multiply; */}
+      ${'' /* filter: grayscale(100%) contrast(1); */}
       transition: var(--transition);
     }
 
@@ -116,7 +122,14 @@ const StyledPic = styled.div`
 const About = () => {
   const data = useStaticQuery(graphql`
     query {
-      avatar: file(sourceInstanceName: { eq: "images" }, relativePath: { eq: "me.jpg" }) {
+      avatar: file(sourceInstanceName: { eq: "images" }, relativePath: { eq: "me.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 500, traceSVG: { color: "#64ffda" }) {
+            ...GatsbyImageSharpFluid_withWebp_tracedSVG
+          }
+        }
+      }
+      golf: file(sourceInstanceName: { eq: "images" }, relativePath: { eq: "zach-golf.jpg" }) {
         childImageSharp {
           fluid(maxWidth: 500, traceSVG: { color: "#64ffda" }) {
             ...GatsbyImageSharpFluid_withWebp_tracedSVG
@@ -132,7 +145,14 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['JavaScript (ES6+)', 'HTML & (S)CSS', 'React', 'Vue', 'Node.js', 'WordPress'];
+  const skills = [
+    'Node.js',
+    'Angular 9',
+    'NestJS / Express',
+    'React',
+    'Digital Ocean',
+    'WordPress',
+  ];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -141,29 +161,58 @@ const About = () => {
       <div className="inner">
         <StyledText>
           <div>
-            <p>Hello! I'm Brittany, a software engineer based in Boston, MA.</p>
+            <p>I'm a builder at heart. I've refinished golf putters, built leather wallets,</p>
+
+            <p>My web development journey started on a golf course.</p>
 
             <p>
-              I enjoy creating things that live on the internet, whether that be websites,
-              applications, or anything in between. My goal is to always build products that provide
-              pixel-perfect, performant experiences.
+              Nothing fancy, just an amateur-looking WordPress site that I called "The DIY Golfer"
+              (I've made a{' '}
+              <a href="https://www.thediygolfer.com">few improvements over the years</a>)
             </p>
 
             <p>
-              Shortly after graduating from{' '}
-              <a href="https://www.ccis.northeastern.edu">Northeastern University</a>, I joined the
-              engineering team at <a href="https://www.upstatement.com">Upstatement</a> where I work
-              on a wide variety of interesting and meaningful projects on a daily basis.
+              A year passed, and while I was having fun being a "blogger", I had a problem–I
+              couldn't modify my site how I wanted to.
             </p>
 
-            <p>Here are a few technologies I've been working with recently:</p>
+            <p>
+              I realized that I either needed to learn how to code, or pay someone a lot of money
+              (which I didn't have).
+            </p>
+
+            <p>
+              Over winter break of my senior year, I started Harvard's CS50 course. I took that
+              course on the road with me to all my golf tournaments and woke up early to get it done
+              before my Finance classes. It was tough, but gave me momentum.
+            </p>
+
+            <p>
+              Since that semester, I built a computer (Nand2Tetris), attended the 42 Coding
+              bootcamp, worked at a blockchain startup, and most recently, launched an online golf
+              learning platform called{' '}
+              <a href="https://training.thediygolfer.com/courses">Eagle Eye Performance</a> along
+              with reaching 4,000 subscribers on my{' '}
+              <a href="https://www.youtube.com/channel/UCDwIw3MiPJXu5SavbZ3_a2A">
+                software YouTube channel.
+              </a>
+            </p>
+
+            <p>
+              Here are technologies and frameworks that I've been working in most actively over the
+              last several years.
+            </p>
           </div>
 
           <ul className="skills-list">
             {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
           </ul>
         </StyledText>
-
+        <StyledPic>
+          <div className="wrapper">
+            <Img fluid={data.golf.childImageSharp.fluid} alt="Avatar" className="img" />
+          </div>
+        </StyledPic>
         <StyledPic>
           <div className="wrapper">
             <Img fluid={data.avatar.childImageSharp.fluid} alt="Avatar" className="img" />
