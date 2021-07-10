@@ -1,6 +1,6 @@
 
 <h1 align="center">
-  zachgollwitzer.com
+  www.github.com/yedukondalubdeveloper
 </h1>
 <p align="center">
   My personal portfolio.  Designed and originally developed by <a href="https://brittanychiang.com" target="_blank">brittanychiang.com</a>.  Modified by myself.
